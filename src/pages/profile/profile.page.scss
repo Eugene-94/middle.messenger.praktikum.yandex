@@ -1,0 +1,20 @@
+.profile-page {
+  display: flex;
+  justify-content: center;
+
+  hr {
+    margin: 24px 0;
+  }
+}
+
+.profile {
+  width: 100%;
+  max-width: 720px;
+
+  &__actions {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 40px;
+    margin-top: 50px;
+  }
+}
