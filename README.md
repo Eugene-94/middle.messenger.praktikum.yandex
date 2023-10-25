@@ -7,7 +7,7 @@ Development stack and tools:
 - vite
 - sass
 
-**[Live demo](https://celebrated-sundae-4a98a5.netlify.app)** / **[UI Prototype](https://www.figma.com/file/tlJmcJdQZxyxCgo8xcE81A/Untitled?type=design&node-id=12-224&mode=design&t=dfSHMa5oHrijtPBj-0)**
+**[Live demo](https://friendly-speculoos-8da049.netlify.app/)** / **[UI Prototype](https://www.figma.com/file/tlJmcJdQZxyxCgo8xcE81A/Untitled?type=design&node-id=12-224&mode=design&t=dfSHMa5oHrijtPBj-0)**
 
 
 # Install
