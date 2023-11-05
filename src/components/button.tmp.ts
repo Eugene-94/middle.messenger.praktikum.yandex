@@ -1,2 +1,3 @@
-//language=hbs
-export default '<button class="button" type="{{ type }}">{{ label }}</button>';
+// language=hbs
+
+export default "<button class='button' type='{{ type }}'>{{ label }}</button>";

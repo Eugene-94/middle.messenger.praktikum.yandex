@@ -1,14 +1,16 @@
-import Handlebars from "handlebars";
+import Handlebars from 'handlebars';
 
-import button from "./components/button.tmp";
-import userInfo from "./components/user-info/user-info.tmp.ts";
-import contact from "./components/contact/contact.tmp.ts";
-import message from "./components/message/message.tmp.ts";
-import avatar from "./components/avatar/avatar.tmp.ts";
+import button from './components/button.tmp';
+import userInfo from './components/user-info/user-info.tmp.ts';
+import contact from './components/contact/contact.tmp.ts';
+import message from './components/message/message.tmp.ts';
+import avatar from './components/avatar/avatar.tmp.ts';
 
-import "./components/message/message.scss";
-import "./components/avatar/avatar.scss";
+import './components/message/message.scss';
+import './components/avatar/avatar.scss';
 
+const first_value = 1;
+console.log(first_value);
 
 export default () => {
     Handlebars.registerPartial('button', button);

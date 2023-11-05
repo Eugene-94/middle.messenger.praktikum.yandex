@@ -9,10 +9,8 @@ const data = {
         first_name: "Иван",
         second_name: "Иванов",
         phone: "+79099673030",
-        display_name: 'Иван'
-    }
-}
-
-export default () => {
-    return renderer(template, data);
+        display_name: "Иван",
+    },
 };
+
+export default () => renderer(template, data);
