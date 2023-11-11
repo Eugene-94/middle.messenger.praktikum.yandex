@@ -11,7 +11,7 @@ export type Props = {
 
 export type PropsEvents = {
     [key: string]: (event: Event) => void;
-} | { };
+} | object;
 
 export type BlockChildren = {
     [key: string]: Block

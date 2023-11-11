@@ -57,7 +57,7 @@ abstract class Block {
             propsAndStubs[key] = `<div data-id="${child._id}"></div>`
         });
 
-        Object.entries(this.lists).forEach(([key, child]) => {
+        Object.keys(this.lists).forEach((key) => {
             propsAndStubs[key] = `<div data-id="list__${key}"></div>`
         });
 
@@ -192,17 +192,15 @@ abstract class Block {
     };
 
     private _makePropsProxy(props: Props): Props {
-        const self = this;
         return new Proxy(props, {
             get(target: Props, prop: string) {
                 const value = target[prop];
                 return typeof value === "function" ? value.bind(target) : value;
             },
-            set(target: Props, prop: string, value): boolean {
-                console.log('set')
+            set: (target: Props, prop: string, value): boolean => {
                 if (target[prop] !== value) {
                     target[prop] = value;
-                    self._setUpdate = true;
+                    this._setUpdate = true;
                 }
 
                 return true;

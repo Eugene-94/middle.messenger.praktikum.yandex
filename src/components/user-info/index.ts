@@ -36,22 +36,22 @@ class UserInfoComponent extends Block {
         Object.entries(userInfo).forEach(([key, value]) => {
             const validators: ValidationFn[] = [Validators.required];
             switch (key) {
-                case "first_name":
-                case "second_name":
-                case "display_name":
-                    validators.push(Validators.pattern(new RegExp(/^[A-ZА-ЯЁ][a-za-яё-]+$/ug)));
-                    break;
-                case "email":
-                    validators.push(Validators.email)
-                    break;
-                case "login":
-                    validators.push(Validators.pattern(new RegExp(/^[a-zA-Z][a-zA-Z0-9_-]{3,20}$/)));
-                    break;
-                case "phone":
-                    validators.push(Validators.pattern(new RegExp(/^[+]?\d+/)));
-                    break;
-                default:
-                    throw Error(`unknown field type: ${key}`)
+            case "first_name":
+            case "second_name":
+            case "display_name":
+                validators.push(Validators.pattern(new RegExp(/^[A-ZА-ЯЁ][a-za-яё-]+$/ug)));
+                break;
+            case "email":
+                validators.push(Validators.email)
+                break;
+            case "login":
+                validators.push(Validators.pattern(new RegExp(/^[a-zA-Z][a-zA-Z0-9_-]{3,20}$/)));
+                break;
+            case "phone":
+                validators.push(Validators.pattern(new RegExp(/^[+]?\d+/)));
+                break;
+            default:
+                throw Error(`unknown field type: ${key}`)
             }
 
             const input = new Input(
