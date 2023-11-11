@@ -1,9 +1,9 @@
-import './style.scss';
+import "./style.scss";
 
-import routesHandling from './routing/router';
+import routesHandling from "./routing/router";
 
 const app = () => {
     routesHandling();
 };
 
-document.addEventListener('DOMContentLoaded', app);
+document.addEventListener("DOMContentLoaded", app);

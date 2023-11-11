@@ -1,67 +1,82 @@
 import {Input} from "../../../components/input";
 import {Validators} from "../../../services/validation/validator.service.ts";
 
-const oldPass = new Input('div', {
+const oldPass = new Input(
+    "div",
+    {
         settings: {
-            withInternalID: true
+            withInternalID: true,
         },
         attrs: {
-            class: 'form-control'
+            class: "form-control"
         },
         events: {
-            'blur': () => {
+            blur: () => {
                 oldPass.updateValue();
                 oldPass.runValidators();
             }
         },
-        label: 'Старый пароль',
-        type: 'password',
+        label: "Старый пароль",
+        type: "password",
         name: "oldPassword",
-        placeholder: "Введите"
+        placeholder: "Введите",
     },
-    [Validators.required],
+    [
+        Validators.required,
+        Validators.pattern(/^(?=.*\d)(?=.*[A-ZА-Я])(?!.*[^a-zа-яA-ZА-Я0-9@#$^+=])(.{8,40})$/u),
+    ],
 );
 
-const newPass = new Input('div', {
+const newPass = new Input(
+    "div",
+    {
         settings: {
-            withInternalID: true
+            withInternalID: true,
         },
         attrs: {
-            class: 'form-control'
+            class: "form-control"
         },
         events: {
-            'blur': () => {
+            blur: () => {
                 newPass.updateValue();
                 newPass.runValidators();
             }
         },
-        label: 'Новый пароль',
-        type: 'password',
+        label: "Новый пароль",
+        type: "password",
         name: "newPassword",
-        placeholder: "Введите"
+        placeholder: "Введите",
     },
-    [Validators.required],
+    [
+        Validators.required,
+        Validators.pattern(/^(?=.*\d)(?=.*[A-ZА-Я])(?!.*[^a-zа-яA-ZА-Я0-9@#$^+=])(.{8,40})$/u),
+    ],
 );
 
-const repeatNewPass = new Input('div', {
+const repeatNewPass = new Input(
+    "div",
+    {
         settings: {
-            withInternalID: true
+            withInternalID: true,
         },
         attrs: {
-            class: 'form-control'
+            class: "form-control",
         },
         events: {
-            'blur': () => {
+            blur: () => {
                 repeatNewPass.updateValue();
                 repeatNewPass.runValidators();
             }
         },
-        label: 'Повторите новый пароль',
-        type: 'password',
+        label: "Повторите новый пароль",
+        type: "password",
         name: "newPasswordRepeat",
-        placeholder: "Введите"
+        placeholder: "Введите",
     },
-    [Validators.required],
+    [
+        Validators.required,
+        Validators.pattern(/^(?=.*\d)(?=.*[A-ZА-Я])(?!.*[^a-zа-яA-ZА-Я0-9@#$^+=])(.{8,40})$/u),
+    ],
 );
 
 export default [oldPass, newPass, repeatNewPass];
