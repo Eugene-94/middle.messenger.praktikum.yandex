@@ -3,12 +3,13 @@ export default `
         <div class="profile-page">
             <div class="profile">
                 <div class="flex flex-center">
-                    {{> avatar clickable="true" }}
+                    {{{ avatar }}}
                 </div>
 
                 <h1 class="profile__username text-center">Иван</h1>
+                
+                {{{ userInfo }}}
 
-                {{> userInfo userInfo readonly='true' }}
                 
                 <div class="profile__actions">
                     <div>

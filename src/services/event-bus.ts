@@ -1,4 +1,4 @@
-type Callback = (...args: unknown[]) => void;
+type Callback = (...args: any[]) => void;
 type Listeners = { [key: string]: Callback[] };
 
 export default class {
@@ -19,7 +19,7 @@ export default class {
         }
 
         this.listeners[event] = this.listeners[event].filter(
-            (listener: Callback) => listener !== callback
+            (listener: Callback): boolean => listener !== callback,
         );
     }
 

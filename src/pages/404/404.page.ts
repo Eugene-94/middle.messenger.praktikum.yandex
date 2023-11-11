@@ -1,4 +1,24 @@
 import template from "./404.page.tmp.ts";
-import renderer from "../../renderer.ts";
+import render from "../../utils/render.ts";
+import Block from "../../core/block/block.ts";
 
-export default () => renderer(template);
+class Page404 extends Block {
+
+    public render(): DocumentFragment {
+        return this.compile(template, this.props);
+    }
+
+}
+
+export default () => {
+    const page404 = new Page404("div", {
+        settings: {
+            withInternalID: true,
+        },
+        attrs: {
+            class: "error-page",
+        },
+    });
+
+    render("#app", page404);
+};
