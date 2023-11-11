@@ -8,7 +8,7 @@ export class Input extends Control {
     constructor(
         protected tagName: string,
         protected props: PropsAndChildren,
-        protected validators: ValidationFn[],
+        public validators: ValidationFn[],
     ) {
         super(tagName, props, validators);
     }

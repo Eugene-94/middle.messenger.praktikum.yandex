@@ -22,5 +22,5 @@ export type BlockLists = {
 }
 
 export type PropsAndChildren = {
-    [key: string]: number | string | PropsEvents | Block | any[];
+    [key: string]: number | string | boolean | PropsEvents | Block | any[];
 }
