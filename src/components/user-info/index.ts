@@ -1,10 +1,10 @@
 import Block from "../../core/block/block.ts";
 import template from "./user-info.tmp.ts";
-import {Input} from "../input";
-import {UserInfo} from "../../core/user/user-info.type.ts";
-import {Validators} from "../../services/validation/validator.service.ts";
-import {Props} from "../../core/block/block.types.ts";
-import {ValidationFn} from "../../services/validation/validation.types.ts";
+import { Input } from "../input";
+import { UserInfo } from "../../core/user/user-info.type.ts";
+import { Validators } from "../../services/validation/validator.service.ts";
+import { Props } from "../../core/block/block.types.ts";
+import { ValidationFn } from "../../services/validation/validation.types.ts";
 
 class UserInfoComponent extends Block {
 
@@ -14,15 +14,6 @@ class UserInfoComponent extends Block {
 
 
     public render(): DocumentFragment {
-        this._labels = new Map<string, string>([
-            ["first_name", "Имя"],
-            ["second_name", "Фамилия"],
-            ["email", "Почта"],
-            ["login", "Логин"],
-            ["display_name", "Имя в чате"],
-            ["phone", "Телефон"],
-        ]);
-
         const inputs = this._createField(this.props.userInfo);
 
         this.lists = {...this.lists, inputs };
@@ -32,6 +23,15 @@ class UserInfoComponent extends Block {
 
     private _createField(userInfo: UserInfo): Input[] {
         const inputs: Input[] = [];
+
+        const labels = new Map<string, string>([
+            ["first_name", "Имя"],
+            ["second_name", "Фамилия"],
+            ["email", "Почта"],
+            ["login", "Логин"],
+            ["display_name", "Имя в чате"],
+            ["phone", "Телефон"],
+        ]);
 
         Object.entries(userInfo).forEach(([key, value]) => {
             const validators: ValidationFn[] = [Validators.required];
@@ -69,7 +69,7 @@ class UserInfoComponent extends Block {
                             input.runValidators();
                         },
                     },
-                    label: this._labels.get(key) as string,
+                    label: labels.get(key) as string,
                     type: "text",
                     name: key,
                     value,

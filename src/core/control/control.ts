@@ -9,7 +9,7 @@ export abstract class Control extends Block implements Validatable {
     protected constructor(
         protected tagName: string = "div",
         protected propsAndChildren: PropsAndChildren = {},
-        protected validators: ValidationFn[] = [],
+        public validators: ValidationFn[] = [],
     ) {
         super(tagName, propsAndChildren);
         this.validators = validators;
@@ -46,5 +46,5 @@ export interface Validatable {
     value: any;
     validators: ValidationFn[];
 
-    runValidation: (control: Control) => void;
+    runValidators: (control: Control) => void;
 }
