@@ -12,6 +12,6 @@ export default `
         {{#if readonly}}disabled{{/if}}
     >
     {{#if errors}}
-        <div class="validation-error">Некорректное значение</div>
+        <div class="validation-error">{{ errors }}</div>
     {{/if}}
 `;

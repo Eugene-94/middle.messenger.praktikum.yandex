@@ -3,11 +3,17 @@ import "./change-password.scss";
 import render from "../../utils/render.ts";
 import Block from "../../core/block/block.ts";
 import ChangePasswordForm from "./change-password-form";
-import inputs from "./change-password-form/inputs.ts";
+import formInputs from "./change-password-form/inputs.ts";
 import Button from "../../components/button";
 import Avatar from "../../components/avatar";
+import {BasicProps} from "../../core/block/block.types.ts";
 
-class ChangePasswordPage extends Block {
+type changePasswordPageProps = BasicProps & {
+    avatar: Avatar;
+    form: ChangePasswordForm
+}
+
+class ChangePasswordPage extends Block<changePasswordPageProps> {
     render(): DocumentFragment {
         return this.compile(template, this.props);
     }
@@ -23,21 +29,20 @@ export default () => {
         type: "Submit",
     });
 
+    const inputs = formInputs();
+
     const form = new ChangePasswordForm("form", {
         attrs: {
             class: "change-password__form",
         },
-        settings: {
-            withInternalID: true,
-        },
         events: {
-            submit: (e) => {
-                e.preventDefault();
+            submit: (event: Event) => {
+                event.preventDefault();
                 inputs.forEach((input) => {
                     input.updateValue();
                     input.runValidators();
                 });
-                const formData = new FormData(e.target as HTMLFormElement);
+                const formData = new FormData(event.target as HTMLFormElement);
                 console.log("form data", JSON.stringify(Object.fromEntries(formData)));
             },
         },
@@ -49,17 +54,11 @@ export default () => {
         attrs: {
             class: "avatar",
         },
-        settings: {
-            withInternalID: true,
-        },
     });
 
     const changePasswordPage = new ChangePasswordPage("div", {
         attrs: {
             class: "change-password-page",
-        },
-        settings: {
-            withInternalID: true,
         },
         form,
         avatar,

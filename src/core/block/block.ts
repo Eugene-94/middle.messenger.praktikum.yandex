@@ -4,22 +4,20 @@ import {
     BlockChildren,
     BlockLists,
     BlockMeta,
-    Props,
-    PropsAndChildren,
     PropsEvents
 } from "./block.types.ts";
 import { v4 as makeUUID } from "uuid";
 
 import Handlebars from "handlebars";
 
-abstract class Block {
+abstract class Block<Props extends Record<string, any> = any> {
 
     abstract render(): DocumentFragment;
 
     public eventBus: EventBus;
 
 
-    private _meta: BlockMeta | null = null;
+    private _meta: BlockMeta<Props> | null = null;
     private _id: string | null;
     private _setUpdate = false;
 
@@ -28,13 +26,13 @@ abstract class Block {
     protected lists: BlockLists;
     protected element: HTMLElement | null = null;
 
-    public constructor(protected tagName: string = "div", protected propsAndChildren: PropsAndChildren = {}) {
+    public constructor(protected tagName: string = "div", protected propsAndChildren: Props) {
         const { children, props, lists } = this._getChildren(propsAndChildren);
 
-        this._id = props.settings && props.settings.withInternalID && makeUUID() || null;
+        this._id = props.settings && props.settings.withInternalID === false && null || makeUUID();
 
-        this.children = this._makePropsProxy(children);
-        this.lists = this._makePropsProxy(lists);
+        this.children = this._makePropsProxy<BlockChildren>(children);
+        this.lists = this._makePropsProxy<BlockLists>(lists);
 
         this.props = this._makePropsProxy({...props, __id: this._id});
 
@@ -50,8 +48,8 @@ abstract class Block {
         this.eventBus.emit(BlockEvents.INIT);
     }
 
-    public compile(template: string, props: PropsAndChildren): DocumentFragment {
-        const propsAndStubs: PropsAndChildren = { ...props };
+    public compile(template: string, props: Props): DocumentFragment {
+        const propsAndStubs: Record<string, any> = { ...props };
 
         Object.entries(this.children).forEach(([key, child]) => {
             propsAndStubs[key] = `<div data-id="${child._id}"></div>`
@@ -91,18 +89,19 @@ abstract class Block {
         return fragment.content;
     }
 
-    private _getChildren(propsAndChildren: PropsAndChildren): { props: Props, children: BlockChildren, lists: BlockLists } {
-        const children: BlockChildren = {};
-        const props: Props = {};
-        const lists: BlockLists = {}
+    private _getChildren(propsAndChildren: Props): { props: Props, children: BlockChildren, lists: BlockLists } {
+        const children: BlockChildren = { };
+        const props: Props = { } as Props;
+        const lists: BlockLists = { };
 
-        Object.entries(propsAndChildren).forEach(([key, value]): void => {
+        Object.keys(propsAndChildren).forEach((key: string): void => {
+            const value: unknown = propsAndChildren[key];
             if (value instanceof Block) {
                 children[key] = value;
             } else if(Array.isArray(value)) {
                 lists[key] = value;
             } else {
-                props[key] = value;
+                (props as Record<string, any>)[key] = value;
             }
         });
 
@@ -191,15 +190,15 @@ abstract class Block {
 
     };
 
-    private _makePropsProxy(props: Props): Props {
+    private _makePropsProxy<T extends object>(props: T): T {
         return new Proxy(props, {
-            get(target: Props, prop: string) {
-                const value = target[prop];
+            get(target: T, prop: string) {
+                const value = target[prop as keyof T];
                 return typeof value === "function" ? value.bind(target) : value;
             },
-            set: (target: Props, prop: string, value): boolean => {
-                if (target[prop] !== value) {
-                    target[prop] = value;
+            set: (target: T, prop: string, value: unknown): boolean => {
+                if (target[prop as keyof T] !== value) {
+                    target[prop as keyof T] = value as T[keyof T];
                     this._setUpdate = true;
                 }
 

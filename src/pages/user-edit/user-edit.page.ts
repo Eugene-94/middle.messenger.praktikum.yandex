@@ -7,8 +7,14 @@ import UserInfoComponent from "../../components/user-info";
 import data from "../../core/data/mock-data.ts";
 import Button from "../../components/button";
 import UserForm from "./user-form";
+import { BasicProps } from "../../core/block/block.types.ts";
 
-class UserEditPage extends Block {
+type UserEditPageProps = BasicProps & {
+    avatar: Avatar;
+    userForm: UserForm;
+};
+
+class UserEditPage extends Block<UserEditPageProps> {
     render(): DocumentFragment {
         return this.compile(template, this.props);
     }
@@ -19,15 +25,9 @@ export default () => {
         attrs: {
             class: "avatar",
         },
-        settings: {
-            withInternalID: true,
-        },
     });
 
     const userInfo = new UserInfoComponent("div", {
-        settings: {
-            withInternalID: true,
-        },
         userInfo: data.userInfo,
     });
 
@@ -40,17 +40,14 @@ export default () => {
     });
 
     const userForm = new UserForm("form", {
-        settings: {
-            withInternalID: true,
-        },
         attrs: {
             class: "user-edit-page__form",
         },
         events: {
-            submit: (e) => {
-                e.preventDefault();
+            submit: (event: Event): void => {
+                event!.preventDefault();
 
-                const formData = new FormData(e.target as HTMLFormElement);
+                const formData = new FormData(event.target as HTMLFormElement);
                 console.log("form data", JSON.stringify(Object.fromEntries(formData)));
             },
         },
@@ -61,9 +58,6 @@ export default () => {
     const userEditPage = new UserEditPage("div", {
         attrs: {
             class: "user-edit-page",
-        },
-        settings: {
-            withInternalID: true,
         },
         avatar,
         userForm,

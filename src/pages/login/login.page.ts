@@ -3,9 +3,14 @@ import Block from "../../core/block/block.ts";
 import LoginForm from "./login-form";
 import render from "../../utils/render.ts";
 import Button from "../../components/button";
-import inputs from "./login-form/inputs.ts";
+import formInputs from "./login-form/inputs.ts";
+import {BasicProps} from "../../core/block/block.types.ts";
 
-class LoginPage extends Block {
+type LoginPageProps = BasicProps & {
+    form: LoginForm
+}
+
+class LoginPage extends Block<LoginPageProps> {
 
     render(): DocumentFragment {
         return this.compile(template, this.props);
@@ -23,22 +28,21 @@ export default () => {
         type: "Submit",
     });
 
+    const inputs = formInputs();
+
     const loginForm = new LoginForm("form", {
         attrs: {
             class: "login__form",
         },
-        settings: {
-            withInternalID: true,
-        },
         events: {
-            submit: (e) => {
-                e.preventDefault();
+            submit: (event: Event) => {
+                event.preventDefault();
                 inputs.forEach((input) => {
                     input.updateValue();
                     input.runValidators();
                 });
 
-                const formData = new FormData(e.target as HTMLFormElement);
+                const formData = new FormData(event.target as HTMLFormElement);
                 console.log("form data", JSON.stringify(Object.fromEntries(formData)));
             },
         },
@@ -49,9 +53,6 @@ export default () => {
     const loginPage = new LoginPage("div", {
         attrs: {
             class: "login-page",
-        },
-        settings: {
-            withInternalID: true,
         },
         form: loginForm,
     });

@@ -1,14 +1,15 @@
 import Block from "../block/block.ts";
-import { PropsAndChildren, PropsEvents } from "../block/block.types.ts";
+import { PropsEvents } from "../block/block.types.ts";
 import { ValidationFn } from "../../services/validation/validation.types.ts";
+import errorsMessages from "../../services/validation/errors-messages.ts";
 
-export abstract class Control extends Block implements Validatable {
+export abstract class Control<Props extends Record<string, any> = any> extends Block<Props> implements Validatable {
 
     public value: any;
 
     protected constructor(
         protected tagName: string = "div",
-        protected propsAndChildren: PropsAndChildren = {},
+        protected propsAndChildren: Props,
         public validators: ValidationFn[] = [],
     ) {
         super(tagName, propsAndChildren);
@@ -16,15 +17,31 @@ export abstract class Control extends Block implements Validatable {
     }
 
     public runValidators() {
-        const errors = this.validators.some((validator) => validator(this));
+        let error: string = "";
+
+        this.validators.forEach(validator => {
+            const validationResult = validator(this);
+            if (validationResult) {
+                const errorType = Object.keys(validationResult)[0];
+                error = errorsMessages[errorType as keyof typeof errorsMessages];
+                return;
+            }
+        });
+
         const classes = new Set<string>(this.props.attrs.class.split(" "));
-        if (errors) {
+        if (error) {
             classes.add("invalid");
         } else {
             classes.delete("invalid");
         }
 
-        this.setProps({ errors, attrs: { class: Array.from(classes).join(" ") }, value: this.value } );
+        const newProps: unknown = {
+            errors: error,
+            attrs: { class: Array.from(classes).join(" ") },
+            value: this.value
+        };
+
+        this.setProps(newProps as Props );
     }
 
     public updateValue(): void {

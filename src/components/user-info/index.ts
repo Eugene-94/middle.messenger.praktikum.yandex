@@ -3,15 +3,17 @@ import template from "./user-info.tmp.ts";
 import { Input } from "../input";
 import { UserInfo } from "../../core/user/user-info.type.ts";
 import { Validators } from "../../services/validation/validator.service.ts";
-import { Props } from "../../core/block/block.types.ts";
 import { ValidationFn } from "../../services/validation/validation.types.ts";
+import { BasicProps } from "../../core/block/block.types.ts";
+import validationRegexps from "../../services/validation/validation-regexps.ts";
 
-class UserInfoComponent extends Block {
+type UserInfoProps = BasicProps & {
+    userInfo: UserInfo,
+    inputs?: Input[],
+    readonly?: Boolean
+}
 
-    constructor(tagName: string, props: Props) {
-        super(tagName, props);
-    }
-
+class UserInfoComponent extends Block<UserInfoProps> {
 
     public render(): DocumentFragment {
         const inputs = this._createField(this.props.userInfo);
@@ -39,16 +41,16 @@ class UserInfoComponent extends Block {
             case "first_name":
             case "second_name":
             case "display_name":
-                validators.push(Validators.pattern(new RegExp(/^[A-ZА-ЯЁ][a-za-яё-]+$/ug)));
+                validators.push(Validators.pattern(validationRegexps.name));
                 break;
             case "email":
                 validators.push(Validators.email)
                 break;
             case "login":
-                validators.push(Validators.pattern(new RegExp(/^[a-zA-Z][a-zA-Z0-9_-]{3,20}$/)));
+                validators.push(Validators.pattern(validationRegexps.login));
                 break;
             case "phone":
-                validators.push(Validators.pattern(new RegExp(/^[+]?\d+/)));
+                validators.push(Validators.pattern(validationRegexps.phone));
                 break;
             default:
                 throw Error(`unknown field type: ${key}`)
@@ -57,9 +59,6 @@ class UserInfoComponent extends Block {
             const input = new Input(
                 "div",
                 {
-                    settings: {
-                        withInternalID: true,
-                    },
                     attrs: {
                         class: "form-control",
                     },
@@ -73,7 +72,7 @@ class UserInfoComponent extends Block {
                     type: "text",
                     name: key,
                     value,
-                    readonly: this.props.readonly,
+                    readonly: Boolean(this.props.readonly),
                     placeholder: "Введите",
                 },
                 validators,

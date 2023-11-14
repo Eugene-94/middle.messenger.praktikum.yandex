@@ -1,8 +1,13 @@
 import Block from "../../core/block/block.ts";
 import template from "./button.tmp.ts";
-import { PropsEvents } from "../../core/block/block.types.ts";
+import {BasicProps, PropsEvents} from "../../core/block/block.types.ts";
 
-class Button extends Block {
+type ButtonProps = BasicProps & {
+    label?: string,
+    type: "Submit",
+}
+
+class Button extends Block<ButtonProps> {
     public render(): DocumentFragment {
         return this.compile(template, this.props);
     }

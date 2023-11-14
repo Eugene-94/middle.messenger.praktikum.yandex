@@ -1,59 +1,53 @@
 import { Input } from "../../../components/input";
 import { Validators } from "../../../services/validation/validator.service.ts";
+import validationRegexps from "../../../services/validation/validation-regexps.ts";
 
-const loginField = new Input(
-    "div",
-    {
-        settings: {
-            withInternalID: true
+export default () => {
+    const loginField = new Input(
+        "div",
+        {
+            attrs: {
+                class: "login__form-control form-control"
+            },
+            events: {
+                blur: () => {
+                    loginField.updateValue();
+                    loginField.runValidators();
+                }
+            },
+            label: "Логин",
+            type: "text",
+            name: "login",
+            placeholder: "Введите"
         },
-        attrs: {
-            class: "login__form-control form-control"
-        },
-        events: {
-            blur: () => {
-                loginField.updateValue();
-                loginField.runValidators();
-            }
-        },
-        label: "Логин",
-        type: "text",
-        name: "login",
-        placeholder: "Введите"
-    },
-    [
-        Validators.pattern(new RegExp(/^[a-zA-Z][a-zA-Z0-9_-]{3,20}$/)),
-        Validators.required,
-    ],
-);
+        [
+            Validators.required,
+            Validators.pattern(validationRegexps.login),
+        ],
+    );
 
-const passwordField = new Input(
-    "div",
-    {
-        settings: {
-            withInternalID: true,
+    const passwordField = new Input(
+        "div",
+        {
+            attrs: {
+                class: "login__form-control form-control"
+            },
+            events: {
+                blur: () => {
+                    passwordField.updateValue();
+                    passwordField.runValidators();
+                }
+            },
+            label: "Пароль",
+            type: "password",
+            name: "password",
+            placeholder: "Введите",
         },
-        attrs: {
-            class: "login__form-control form-control"
-        },
-        events: {
-            blur: () => {
-                passwordField.updateValue();
-                passwordField.runValidators();
-            }
-        },
-        label: "Пароль",
-        type: "password",
-        name: "password",
-        placeholder: "Введите",
-    },
-    [
-        Validators.required,
-        Validators.pattern(/^(?=.*\d)(?=.*[A-ZА-Я])(?!.*[^a-zа-яA-ZА-Я0-9@#$^+=])(.{8,40})$/u),
-    ],
-);
+        [
+            Validators.required,
+            Validators.pattern(validationRegexps.password),
+        ],
+    );
 
-export default [
-    loginField,
-    passwordField,
-]
+    return [loginField, passwordField]
+}

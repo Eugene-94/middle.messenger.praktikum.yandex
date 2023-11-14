@@ -6,8 +6,15 @@ import Contact from "../../components/contact";
 import template from "./chats.page.tmp.ts";
 import Message from "../../components/message";
 import SendForm from "./send-form";
+import {BasicProps} from "../../core/block/block.types.ts";
 
-class ChatPage extends Block {
+type ChatPageProps = BasicProps & {
+    contacts: Contact[];
+    messages: Message[];
+    form: SendForm;
+}
+
+class ChatPage extends Block<ChatPageProps> {
     render(): DocumentFragment {
         return this.compile(template, this.props);
     }
@@ -15,13 +22,10 @@ class ChatPage extends Block {
 
 export default () => {
     const form = new SendForm("form", {
-        settings: {
-            withInternalID: true,
-        },
         events: {
-            submit: (e) => {
-                e.preventDefault();
-                const formData = new FormData(e.target as HTMLFormElement);
+            submit: (event: Event) => {
+                event.preventDefault();
+                const formData = new FormData(event.target as HTMLFormElement);
                 console.log("form data", JSON.stringify(Object.fromEntries(formData)));
             },
         },
@@ -31,16 +35,10 @@ export default () => {
         attrs: {
             class: "chats-grid",
         },
-        settings: {
-            withInternalID: true,
-        },
         contacts: data.contacts.map((contact) => (
             new Contact("article", {
                 attrs: {
                     class: "contact",
-                },
-                settings: {
-                    withInternalID: true,
                 },
                 ...contact,
             })
@@ -49,9 +47,6 @@ export default () => {
             new Message("div", {
                 attrs: {
                     class: `message${message.outgoing ? " message_outgoing" : ""}`,
-                },
-                settings: {
-                    withInternalID: true,
                 },
                 text: message.text,
             })

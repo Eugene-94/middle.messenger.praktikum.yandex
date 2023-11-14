@@ -1,26 +1,29 @@
 import Block from "./block.ts";
 
-export type BlockMeta = {
+export type BlockMeta<T> = {
     tagName: string;
-    props: Props;
-};
-
-export type Props = {
-    [key: string]: any;
+    props: T;
 };
 
 export type PropsEvents = {
     [key: string]: (event: Event) => void;
-} | object;
+};
 
 export type BlockChildren = {
-    [key: string]: Block
+    [key: string]: Block<any>;
 };
 
 export type BlockLists = {
-    [key: string]: any[]
-}
+    [key: string]: unknown[];
+};
 
-export type PropsAndChildren = {
-    [key: string]: number | string | boolean | PropsEvents | Block | any[];
-}
+export type BasicProps = {
+    settings?: {
+        withInternalID?: boolean
+    },
+    attrs?: {
+        class?: string,
+        id?: string
+    },
+    events?: PropsEvents
+};

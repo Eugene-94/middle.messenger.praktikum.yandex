@@ -1,8 +1,14 @@
 import Block from "../../core/block/block.ts";
 import template from "./avatar.tmp.ts";
 import "./avatar.scss";
+import {BasicProps} from "../../core/block/block.types.ts";
 
-class Avatar extends Block {
+type AvatarProps = BasicProps & {
+    clickable?: boolean;
+    src?: string;
+}
+
+class Avatar extends Block<AvatarProps> {
     public render(): DocumentFragment {
         return this.compile(template, this.props);
     }

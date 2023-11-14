@@ -4,8 +4,14 @@ import Avatar from "../../components/avatar";
 import render from "../../utils/render.ts";
 import UserInfoComponent from "../../components/user-info";
 import data from "../../core/data/mock-data.ts";
+import {BasicProps} from "../../core/block/block.types.ts";
 
-class ProfilePage extends Block {
+type ProfilePageProps = BasicProps & {
+    avatar: Avatar;
+    userInfo: UserInfoComponent
+};
+
+class ProfilePage extends Block<ProfilePageProps> {
     render(): DocumentFragment {
         return this.compile(template, this.props);
     }
@@ -16,16 +22,10 @@ export default () => {
         attrs: {
             class: "avatar",
         },
-        settings: {
-            withInternalID: true,
-        },
         clickable: true,
     });
 
     const userInfo = new UserInfoComponent("div", {
-        settings: {
-            withInternalID: true,
-        },
         userInfo: data.userInfo,
         readonly: true,
     });
@@ -33,9 +33,6 @@ export default () => {
     const profilePage = new ProfilePage("div", {
         attrs: {
             class: "container",
-        },
-        settings: {
-            withInternalID: true,
         },
         avatar,
         userInfo,

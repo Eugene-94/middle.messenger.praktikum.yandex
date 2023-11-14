@@ -1,6 +1,7 @@
 import { HTTP_METHODS } from "./http-methods.enum.ts";
 import { HTTPPayload, MethodOptions, ReqOptions } from "./http-service.types.ts";
 
+type HTTPMethod = (url: string, options?: MethodOptions) => Promise<unknown>;
 
 function queryStringify(data: HTTPPayload) {
     if (typeof data !== "object") {
@@ -14,20 +15,20 @@ function queryStringify(data: HTTPPayload) {
 }
 
 class HTTPTransport {
-    public get(url: string, options: MethodOptions = {}) {
-        return this.request(url, {...options, method: HTTP_METHODS.GET}, options.timeout);
+    public get: HTTPMethod = (url, options) => {
+        return this.request(url, {...options, method: HTTP_METHODS.GET}, options && options.timeout);
     }
 
-    public post(url: string, options: MethodOptions = {}) {
-        return this.request(url, {...options, method: HTTP_METHODS.POST}, options.timeout);
+    public post: HTTPMethod = (url, options) => {
+        return this.request(url, {...options, method: HTTP_METHODS.POST}, options && options.timeout);
     }
 
-    public put(url: string, options: MethodOptions = {}) {
-        return this.request(url, {...options, method: HTTP_METHODS.PUT}, options.timeout);
+    public put: HTTPMethod = (url, options) => {
+        return this.request(url, {...options, method: HTTP_METHODS.PUT}, options && options.timeout);
     }
 
-    public delete(url: string, options: MethodOptions = {}) {
-        return this.request(url, {...options, method: HTTP_METHODS.DELETE}, options.timeout);
+    public delete: HTTPMethod = (url, options) => {
+        return this.request(url, {...options, method: HTTP_METHODS.DELETE}, options && options.timeout);
     }
 
     private request (url: string, options: ReqOptions, timeout = 5000) {
