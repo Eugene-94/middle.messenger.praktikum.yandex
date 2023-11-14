@@ -10,7 +10,7 @@ import validationRegexps from "../../services/validation/validation-regexps.ts";
 type UserInfoProps = BasicProps & {
     userInfo: UserInfo,
     inputs?: Input[],
-    readonly?: Boolean
+    readonly?: boolean
 }
 
 class UserInfoComponent extends Block<UserInfoProps> {
