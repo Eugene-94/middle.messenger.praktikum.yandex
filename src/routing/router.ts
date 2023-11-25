@@ -1,10 +1,8 @@
-import routes from "./routes";
+import routes from "./routes.ts";
 
-export default () => {
-    document.addEventListener('click', (e: MouseEvent) => {
+export default (): void => {
+    document.addEventListener("click", (e: MouseEvent): void => {
         const target = e.target as HTMLElement;
-
-        console.log(target.dataset)
 
         if (!target.dataset.route) {
             return;
@@ -12,11 +10,9 @@ export default () => {
 
         const routeData = routes.get(target.dataset.route);
 
-        console.log(routeData)
-
         if (routeData) {
             routeData.processor();
         }
 
-    })
+    });
 };

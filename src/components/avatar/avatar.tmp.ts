@@ -1,9 +1,11 @@
 export default `
-    <div class="avatar{{#if clickable}} avatar_clickable{{/if}}">
-        {{#if clickable}}
-            <button class="avatar__btn" type="button"></button>
+    {{#if clickable}}
+        <button class="avatar__btn" type="button"></button>
+    {{else}}
+        {{#if src }}
+            <img src="{{ src }}" alt="Аватар">
         {{else}}
             <div class="avatar__fallback"></div>
         {{/if}}
-    </div>
+    {{/if}}
 `;

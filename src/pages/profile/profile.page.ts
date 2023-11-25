@@ -1,17 +1,42 @@
 import template from "./profile.page.tmp.ts";
-import renderer from "../../renderer.ts";
+import Block from "../../core/block/block.ts";
+import Avatar from "../../components/avatar";
+import render from "../../utils/render.ts";
+import UserInfoComponent from "../../components/user-info";
+import data from "../../core/data/mock-data.ts";
+import {BasicProps} from "../../core/block/block.types.ts";
 
-const data = {
-    userInfo: {
-        email: "pochta@yandex.ru",
-        login: "ivanivanov",
-        first_name: "Иван",
-        second_name: "Иванов",
-        phone: "+79099673030",
-        display_name: 'Иван'
+type ProfilePageProps = BasicProps & {
+    avatar: Avatar;
+    userInfo: UserInfoComponent
+};
+
+class ProfilePage extends Block<ProfilePageProps> {
+    render(): DocumentFragment {
+        return this.compile(template, this.props);
     }
 }
 
 export default () => {
-    return renderer(template, data);
+    const avatar = new Avatar("div", {
+        attrs: {
+            class: "avatar",
+        },
+        clickable: true,
+    });
+
+    const userInfo = new UserInfoComponent("div", {
+        userInfo: data.userInfo,
+        readonly: true,
+    });
+
+    const profilePage = new ProfilePage("div", {
+        attrs: {
+            class: "container",
+        },
+        avatar,
+        userInfo,
+    });
+
+    render("#app", profilePage);
 };

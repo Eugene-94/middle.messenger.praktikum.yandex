@@ -1,12 +1,9 @@
-import './style.scss';
+import "./style.scss";
 
 import routesHandling from "./routing/router";
-import registerPartials from "./partials.ts";
-
 
 const app = () => {
-  routesHandling();
-  registerPartials();
+    routesHandling();
 };
 
-document.addEventListener('DOMContentLoaded', app);
+document.addEventListener("DOMContentLoaded", app);
