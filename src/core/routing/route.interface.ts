@@ -4,3 +4,4 @@ export interface RouteInterface {
     match: (pathname: string) => boolean;
     render: () => void;
 }
+
