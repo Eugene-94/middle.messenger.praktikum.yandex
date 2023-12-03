@@ -18,12 +18,12 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@core/*": ["./src/core/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@services/*": ["./src/services/*"],
-      "@components/*": ["./src/app/components/*"],
-      "@data/*": ["./src/data/*"]
+      "@/*": ["src/*"],
+      "@core/*": ["src/core/*"],
+      "@utils/*": ["src/utils/*"],
+      "@services/*": ["src/services/*"],
+      "@components/*": ["src/app/components/*"],
+      "@data/*": ["src/data/*"]
     }
   },
   "include": ["src"]
