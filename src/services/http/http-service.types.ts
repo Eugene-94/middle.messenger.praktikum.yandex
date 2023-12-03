@@ -1,8 +1,8 @@
 import {HTTP_METHODS} from "./http-methods.enum.ts";
 
 export type HTTPPayload = {
-    [key: string]: string
-};
+    [key: string]: string | string[] | number | number[]
+} | FormData;
 
 export type HTTPHeaders = {
     [key: string]: string
@@ -11,7 +11,9 @@ export type HTTPHeaders = {
 export type MethodOptions = {
     headers?: HTTPHeaders,
     data?: HTTPPayload,
-    timeout?: number
+    timeout?: number,
+    withCredentials?: boolean,
+    responseType?: XMLHttpRequestResponseType,
 }
 
 export type ReqOptions = {

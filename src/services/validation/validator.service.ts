@@ -1,14 +1,14 @@
-import { Control } from "../../core/control/control.ts";
+import { ControlAbstract } from "@core/control/control.abstract.ts";
 import { ValidationErrors, ValidationFn } from "./validation.types.ts";
 import validationRegExps from "./validation-regexps.ts";
 
 export class Validators {
 
-    public static required(c: Control): ValidationErrors | null {
+    public static required(c: ControlAbstract): ValidationErrors | null {
         return requiredValidator(c);
     }
 
-    public static email(c: Control): ValidationErrors | null {
+    public static email(c: ControlAbstract): ValidationErrors | null {
         return emailValidator(c);
     }
 
@@ -17,11 +17,11 @@ export class Validators {
     }
 }
 
-function requiredValidator(c: Control): ValidationErrors | null {
+function requiredValidator(c: ControlAbstract): ValidationErrors | null {
     return isEmptyValue(c.value) ? { required: true } : null;
 }
 
-function emailValidator(c: Control): ValidationErrors | null {
+function emailValidator(c: ControlAbstract): ValidationErrors | null {
     if (isEmptyValue(c.value)) {
         return null;
     }
@@ -29,7 +29,9 @@ function emailValidator(c: Control): ValidationErrors | null {
 }
 
 export function patternValidator(pattern: RegExp): ValidationFn {
-    return (c: Control): ValidationErrors | null => {
+    return (c: ControlAbstract): ValidationErrors | null => {
+
+        console.log("patternValidator", c)
         if (!pattern) {
             return null;
         }
@@ -37,6 +39,7 @@ export function patternValidator(pattern: RegExp): ValidationFn {
             return null;
         }
         const { value } = c;
+        console.log("value", value, pattern.test(value))
         return pattern.test(value) ? null
             : { pattern: { requiredPattern: pattern.toString(), actualValue: value } };
     };

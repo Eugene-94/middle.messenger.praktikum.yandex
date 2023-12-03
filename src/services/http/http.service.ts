@@ -1,11 +1,15 @@
 import { HTTP_METHODS } from "./http-methods.enum.ts";
 import { HTTPPayload, MethodOptions, ReqOptions } from "./http-service.types.ts";
 
-type HTTPMethod = (url: string, options?: MethodOptions) => Promise<unknown>;
+type HTTPMethod = (url: string, options?: MethodOptions) => Promise<XMLHttpRequest>;
 
 function queryStringify(data: HTTPPayload) {
     if (typeof data !== "object") {
         throw new Error("Data must be object");
+    }
+
+    if (data instanceof FormData) {
+        return;
     }
 
     const keys = Object.keys(data);
@@ -15,24 +19,47 @@ function queryStringify(data: HTTPPayload) {
 }
 
 class HTTPTransport {
-    public get: HTTPMethod = (url, options) => {
-        return this.request(url, {...options, method: HTTP_METHODS.GET}, options && options.timeout);
+
+    private readonly _endPoint: string;
+
+    constructor(private _apiPrefix: string) {
+        this._endPoint = "https://ya-praktikum.tech/api/v2";
     }
 
-    public post: HTTPMethod = (url, options) => {
-        return this.request(url, {...options, method: HTTP_METHODS.POST}, options && options.timeout);
+    public get: HTTPMethod = (url, options): Promise<XMLHttpRequest> => {
+        return this.request(
+            `${this._endPoint}/${this._apiPrefix}${url}`,
+            {...options, method: HTTP_METHODS.GET},
+            options && options.timeout
+        );
     }
 
-    public put: HTTPMethod = (url, options) => {
-        return this.request(url, {...options, method: HTTP_METHODS.PUT}, options && options.timeout);
+    public post: HTTPMethod = (url, options): Promise<XMLHttpRequest> => {
+        return this.request(
+            `${this._endPoint}/${this._apiPrefix}${url}`,
+            {...options, method: HTTP_METHODS.POST},
+            options && options.timeout
+        );
     }
 
-    public delete: HTTPMethod = (url, options) => {
-        return this.request(url, {...options, method: HTTP_METHODS.DELETE}, options && options.timeout);
+    public put: HTTPMethod = (url, options): Promise<XMLHttpRequest> => {
+        return this.request(
+            `${this._endPoint}/${this._apiPrefix}${url}`,
+            {...options, method: HTTP_METHODS.PUT},
+            options && options.timeout
+        );
     }
 
-    private request (url: string, options: ReqOptions, timeout = 5000) {
-        const {headers = {}, method, data = {}} = options;
+    public delete: HTTPMethod = (url, options): Promise<XMLHttpRequest> => {
+        return this.request(
+            `${this._endPoint}/${this._apiPrefix}${url}`,
+            {...options, method: HTTP_METHODS.DELETE},
+            options && options.timeout
+        );
+    }
+
+    private request (url: string, options: ReqOptions, timeout = 5000): Promise<XMLHttpRequest> {
+        const {headers = {}, method, data = {}, withCredentials = true, responseType = "json"} = options;
 
         return new Promise(function(resolve, reject) {
             if (!method) {
@@ -54,8 +81,15 @@ class HTTPTransport {
                 xhr.setRequestHeader(key, headers[key]);
             });
 
-            xhr.onload = function() {
-                resolve(xhr);
+            xhr.withCredentials = withCredentials;
+            xhr.responseType = responseType;
+
+            xhr.onload = () => {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(xhr);
+                } else {
+                    reject(xhr);
+                }
             };
 
             xhr.onabort = reject;
@@ -66,8 +100,11 @@ class HTTPTransport {
 
             if (isGet || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
-                xhr.send(data as any);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify(data));
             }
         });
     }

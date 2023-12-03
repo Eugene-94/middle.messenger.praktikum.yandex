@@ -5,12 +5,6 @@
 @import "utils";
 @import "variables";
 
-// blocks
-@import "./pages/login/login.page";
-@import "./pages/signup/signup.page";
-@import "pages/profile/profile.page";
-@import "pages/chats/chats.page";
-@import "components/contact/contact";
 
 * {
   box-sizing: border-box;
@@ -87,6 +81,10 @@ hr {
   border-radius: 4px;
 
   cursor: pointer;
+
+    &_s {
+        padding: 6px 12px;
+    }
 
   &:hover {
     background-color: #2E89EC;
