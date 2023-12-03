@@ -1,8 +1,8 @@
 import { Indexed } from "@core/types/indexed.type.ts";
 
 function merge(lhs: Indexed, rhs: Indexed): Indexed {
-    for (let p in rhs) {
-        if (!rhs.hasOwnProperty(p)) {
+    for (const p in rhs) {
+        if (!(p in rhs)) {
             continue;
         }
 
@@ -21,11 +21,11 @@ function merge(lhs: Indexed, rhs: Indexed): Indexed {
 }
 
 function set(object: Indexed | unknown, path: string, value: unknown): Indexed | unknown {
-    if (typeof object !== 'object' || object === null) {
+    if (typeof object !== "object" || object === null) {
         return object;
     }
 
-    const result = path.split('.').reduceRight<Indexed>((acc, key) => ({
+    const result = path.split(".").reduceRight<Indexed>((acc, key) => ({
         [key]: acc,
     }), value as any);
 

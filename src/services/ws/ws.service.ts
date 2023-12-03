@@ -87,7 +87,7 @@ export class WSTransport extends EventBus {
 
                 this.emit(WSEvents.Message, data);
             } catch (e) {
-
+                throw Error();
             }
         })
     }
