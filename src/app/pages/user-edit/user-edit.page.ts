@@ -2,7 +2,8 @@ import template from "./user-edit.page.tmp.ts";
 import "./user-edit.page.scss";
 import Avatar from "../../components/avatar/avatar.comp.ts";
 import AvatarConnected from "../../components/avatar";
-import UserInfoComponent from "@components/user-info";
+import UserInfoComponent from "@components/user-info/user-info.comp.ts";
+import UserInfoComponentConnected from "@components/user-info";
 import Button from "@components/button";
 import UserForm from "./user-form";
 import { BasicProps } from "@core/block/block.types.ts";
@@ -31,9 +32,9 @@ export default () => {
         src: store.state.user ? `${backendConfig.resourses}${(store.state.user as UserType).avatar}` : undefined
     });
 
-    const userInfo = new UserInfoComponent("div", {
+    const userInfo = new UserInfoComponentConnected("div", {
         userInfo: store.state.user
-    });
+    }) as UserInfoComponent;
 
     const submit = new Button("div", {
         attrs: {

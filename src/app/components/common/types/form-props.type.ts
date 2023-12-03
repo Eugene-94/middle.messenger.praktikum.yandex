@@ -1,4 +1,4 @@
-import {BasicProps} from "../../../core/block/block.types.ts";
+import {BasicProps} from "@core/block/block.types.ts";
 import {Input} from "../../input";
 import Button from "../../button";
 

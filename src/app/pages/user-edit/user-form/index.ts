@@ -1,7 +1,7 @@
 import template from "./user-form.tmp.ts";
 import { BasicProps } from "@core/block/block.types.ts";
 import Button from "@components/button";
-import UserInfoComponent from "@components/user-info";
+import UserInfoComponent from "@components/user-info/user-info.comp.ts";
 import Block from "@/base-blocks/block.ts";
 
 type UserFormProps = BasicProps & {
