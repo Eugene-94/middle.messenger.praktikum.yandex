@@ -3,6 +3,7 @@ import { AuthRepository } from "@data/repositories/auth.repository.ts";
 import store from "@data/store/store.ts";
 import Router from "@/router/router.ts";
 import { UserType } from "@core/types/user.type.ts";
+import {StoreEvents} from "@data/store/store-events.enum.ts";
 
 
 export class CheckUserUsecase implements Usecase<void> {
@@ -18,9 +19,13 @@ export class CheckUserUsecase implements Usecase<void> {
     public execute(): void {
         this._authRepository.userInfo()
             .then((data) => {
+                store.on(StoreEvents.Updated, () => {});
                 store.set("user", data.response as UserType);
-                console.log("user", data.response)
-                if (window.location.pathname.includes("messenger")) {
+                if (
+                    window.location.pathname.includes("messenger") ||
+                    window.location.pathname.includes("profile") ||
+                    window.location.pathname.includes("settings")
+                ) {
                     this._router.go(window.location.pathname);
                 } else {
                     this._router.go("/messenger");
@@ -28,7 +33,11 @@ export class CheckUserUsecase implements Usecase<void> {
             })
             .catch((xhr: XMLHttpRequest) => {
                 if (xhr.status === 401) {
-                    this._router.go("/");
+                    if (window.location.pathname.includes("sign-up")) {
+                        this._router.go(window.location.pathname);
+                    } else {
+                        this._router.go("/");
+                    }
                 }
             });
     }

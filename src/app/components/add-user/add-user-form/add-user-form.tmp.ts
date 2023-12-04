@@ -1,5 +1,5 @@
 export default `
-    <div class="form-control">
+    <div class="form-control mb-s">
         <label class="label">Логин</label>
         <input class="input-text" type="text" name="login">
     </div>
