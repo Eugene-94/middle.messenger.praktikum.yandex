@@ -3,7 +3,6 @@ import { AuthRepository } from "@data/repositories/auth.repository.ts";
 import store from "@data/store/store.ts";
 import Router from "@/router/router.ts";
 import { UserType } from "@core/types/user.type.ts";
-import {StoreEvents} from "@data/store/store-events.enum.ts";
 
 
 export class CheckUserUsecase implements Usecase<void> {
@@ -19,7 +18,6 @@ export class CheckUserUsecase implements Usecase<void> {
     public execute(): void {
         this._authRepository.userInfo()
             .then((data) => {
-                store.on(StoreEvents.Updated, () => {});
                 store.set("user", data.response as UserType);
                 if (
                     window.location.pathname.includes("messenger") ||

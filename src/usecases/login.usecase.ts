@@ -2,6 +2,8 @@ import {Usecase} from "@core/usecases/usecase.interface.ts";
 import {AuthRepository} from "@data/repositories/auth.repository.ts";
 import Router from "@/router/router.ts";
 import { LoginInfo } from "@core/types/login-info.type.ts";
+import store from "@data/store/store.ts";
+import {UserType} from "@core/types/user.type.ts";
 
 export class LoginUsecase implements Usecase<void> {
 
@@ -16,6 +18,10 @@ export class LoginUsecase implements Usecase<void> {
         const data = Object.fromEntries(formData.entries()) as LoginInfo;
         this._authRepository.login(data)
             .then(() => {
+                return this._authRepository.userInfo();
+            })
+            .then((data) => {
+                store.set("user", data.response as UserType);
                 Router.getInstance("#app").go("/messenger")
             })
             .catch((error) => console.log("Login error", error));

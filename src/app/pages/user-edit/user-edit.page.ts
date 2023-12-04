@@ -29,7 +29,8 @@ export default () => {
         attrs: {
             class: "avatar",
         },
-        src: store.state.user ? `${backendConfig.resourses}${(store.state.user as UserType).avatar}` : undefined
+        clickable: false,
+        src: store.state.user?.avatar ? `${backendConfig.resourses}${(store.state.user as UserType).avatar}` : undefined
     });
 
     const userInfo = new UserInfoComponentConnected("div", {

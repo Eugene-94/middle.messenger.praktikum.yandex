@@ -13,7 +13,6 @@ class Store extends EventBus {
     }
 
     public set(path: string, value: unknown) {
-
         set(this._state, path, value);
         this.emit(StoreEvents.Updated);
     }
