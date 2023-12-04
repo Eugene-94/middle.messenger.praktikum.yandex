@@ -1,5 +1,6 @@
 export default `
     <div class="avatar-container">
+
         {{#if clickable}}
             <button class="avatar__btn" type="button">
                 {{#if src }}
@@ -9,6 +10,7 @@ export default `
                 {{/if}}
             </button>
         {{else}}
+            <div>test {{ src }}</div>
             {{#if src }}
                 <img src="{{ src }}" alt="Аватар">
             {{else}}

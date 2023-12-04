@@ -9,6 +9,8 @@ import ChatsPage from "./pages/chats/chats.page.ts";
 import ChangePasswordPage from "./pages/change-password/change-password.page.ts";
 import { CheckUserUsecase } from "@/usecases/check-user.usecase.ts";
 import logoutPage from "@/app/pages/logoutPage/logout.page.ts";
+import store from "@data/store/store.ts";
+import {StoreEvents} from "@data/store/store-events.enum.ts";
 
 
 export default () => {
@@ -26,6 +28,6 @@ export default () => {
         .use("/messenger/:id", ChatsPage)
         .use("/change-password", ChangePasswordPage)
         .start();
-
+    store.on(StoreEvents.Updated, () => {});
     checkUserUsecase.execute();
 };
