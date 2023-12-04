@@ -1,8 +1,8 @@
 export default `
-    <div class="form-control">
+    <div class="form-control mb-s">
         <label class="label">Название</label>
         <input class="input-text" type="text" name="title">
     </div>
 
-    <button type="submit">Создать</button>
+    <button class="button" type="submit">Создать</button>
 `;

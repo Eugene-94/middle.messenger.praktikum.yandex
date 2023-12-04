@@ -31,7 +31,6 @@ function emailValidator(c: ControlAbstract): ValidationErrors | null {
 export function patternValidator(pattern: RegExp): ValidationFn {
     return (c: ControlAbstract): ValidationErrors | null => {
 
-        console.log("patternValidator", c)
         if (!pattern) {
             return null;
         }
@@ -39,7 +38,6 @@ export function patternValidator(pattern: RegExp): ValidationFn {
             return null;
         }
         const { value } = c;
-        console.log("value", value, pattern.test(value))
         return pattern.test(value) ? null
             : { pattern: { requiredPattern: pattern.toString(), actualValue: value } };
     };
