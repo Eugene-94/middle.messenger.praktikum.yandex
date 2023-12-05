@@ -18,12 +18,15 @@ import Button from "@components/button";
 import {ChangeAvatarUsecase} from "@/usecases/change-avatar.usecase.ts";
 import backendConfig from "@/backend.config.ts";
 import {UserType} from "@core/types/user.type.ts";
+import BackBtn from "@components/back-btn";
 
 
 type ProfilePageProps = BasicProps & {
     avatar: Avatar;
     userInfo: UserInfoComponent,
-    settingsLink: Link
+    settingsLink: Link,
+    navBack: BackBtn,
+    user: UserType | null
 };
 
 const profilePageMapper = (state: Indexed): Indexed => {
@@ -95,6 +98,8 @@ export default () => {
         userInfo: store.state.user
     }) as UserInfoComponent;
 
+    const navBack = new BackBtn("div", { });
+
     const connected = connector(ProfilePage, profilePageMapper);
 
     return new connected("div", {
@@ -103,7 +108,9 @@ export default () => {
         },
         avatar,
         userInfo,
-        settingsLink
+        settingsLink,
+        navBack,
+        user: store.state.user ? store.state.user : null
     });
 
 };

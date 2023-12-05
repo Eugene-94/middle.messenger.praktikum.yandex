@@ -24,7 +24,9 @@ export class LoginUsecase implements Usecase<void> {
                 store.set("user", data.response as UserType);
                 Router.getInstance("#app").go("/messenger")
             })
-            .catch((error) => console.log("Login error", error));
+            .catch((xhr) => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+            });
     }
 
 }

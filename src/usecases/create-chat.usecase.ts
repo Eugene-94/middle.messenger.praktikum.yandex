@@ -18,6 +18,9 @@ export class CreateChatUsecase implements Usecase<void> {
             .then(() => this._chatsRepository.getChats())
             .then((data) => {
                 store.set("chats", data.response);
+            })
+            .catch(xhr => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             });
     }
 }

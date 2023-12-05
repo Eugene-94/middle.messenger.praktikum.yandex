@@ -12,10 +12,12 @@ import store from "@data/store/store.ts";
 import {ChangeSettingsUsecase} from "@/usecases/change-settings.usecase.ts";
 import backendConfig from "@/backend.config.ts";
 import {UserType} from "@core/types/user.type.ts";
+import BackBtn from "@components/back-btn";
 
 type UserEditPageProps = BasicProps & {
     avatar: Avatar;
     userForm: UserForm;
+    navBack: BackBtn;
 };
 
 class UserEditPage extends Block<UserEditPageProps> {
@@ -61,11 +63,14 @@ export default () => {
         submit,
     });
 
+    const navBack = new BackBtn("div", { });
+
     return new UserEditPage("div", {
         attrs: {
             class: "user-edit-page",
         },
         avatar,
         userForm,
+        navBack
     });
 };

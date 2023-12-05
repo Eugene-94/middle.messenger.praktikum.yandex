@@ -10,7 +10,6 @@ export default `
                 {{/if}}
             </button>
         {{else}}
-            <div>test {{ src }}</div>
             {{#if src }}
                 <img src="{{ src }}" alt="Аватар">
             {{else}}

@@ -19,7 +19,9 @@ export class SignupUsecase implements Usecase<void> {
         const data = Object.fromEntries(formData.entries()) as SignupInfo;
         this._authRepository.signup(data)
             .then(() => Router.getInstance("#app").go("/messenger"))
-            .catch((error) => console.log("Signup error", error));
+            .catch((xhr) => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+            });
     }
 
 }

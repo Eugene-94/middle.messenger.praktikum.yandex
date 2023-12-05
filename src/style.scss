@@ -70,6 +70,7 @@ hr {
 .button {
   padding: 12px 32px;
   border: none;
+  min-height: 36px;
 
   font-family: inherit;
   color: #FFFFFF;
@@ -82,9 +83,13 @@ hr {
 
   cursor: pointer;
 
-    &_s {
-        padding: 6px 12px;
-    }
+  &_alert {
+    background-color: var(--alert-color);
+  }
+
+  &_s {
+    padding: 6px 12px;
+  }
 
   &:hover {
     background-color: #2E89EC;

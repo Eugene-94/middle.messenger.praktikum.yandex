@@ -24,6 +24,7 @@ export class GetChatsUsercase implements Usecase<void> {
             .catch((xhr: XMLHttpRequest) => {
                 if (xhr.status === 401) {
                     this._router.go("/");
+                    throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
                 }
             });
     }

@@ -1,8 +1,14 @@
 export default `
     <div class="contact {{#if active}}active{{/if}}">
-        <figure class="contact__photo">
+        {{#if avatar}}
+            <figure class="contact__photo contact__photo_fallback">
+                <img src="{{ avatar }}">
+            </figure>
+        {{else}}
+            <figure class="contact__photo contact__photo_fallback">
 
-        </figure>
+            </figure>
+        {{/if}}
 
 
         <div class="contact__base">

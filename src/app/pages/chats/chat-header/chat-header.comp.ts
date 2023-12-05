@@ -8,6 +8,10 @@ import {DialogService} from "@services/dialog/dialog.service.ts";
 import AddUser from "@components/add-user";
 import AddUserForm from "@components/add-user/add-user-form";
 import {AddUserUsecase} from "@/usecases/add-user.usecase.ts";
+import DeleteUser from "@components/delete-user";
+import DeleteUserForm from "@components/delete-user/delete-user-form";
+import {GetChatUsersUsecase} from "@/usecases/get-chat-users.usecase.ts";
+import {DeleteUserUsecase} from "@/usecases/delete-user.usecase.ts";
 
 type ChatHeaderProps = BasicProps & {
     chat?: ChatType | null
@@ -45,6 +49,35 @@ class ChatHeader extends Block<ChatHeaderProps> {
                         })
                     })
                 )
+            })
+        }
+
+        const delUser = this.getContent()?.querySelector(".del-user");
+
+        if (delUser) {
+            delUser.addEventListener("click", () => {
+                new GetChatUsersUsecase()
+                    .execute(store.state.activeChat.id)
+                    .then(users => {
+                        DialogService.getInstance().open(
+                            "Удалить пользователя",
+                            new DeleteUser("div", {
+                                form: new DeleteUserForm("form", {
+                                    chatUsers: { users },
+                                    events: {
+                                        submit: (event) => {
+                                            event.preventDefault();
+                                            const formData = new FormData(event.target as HTMLFormElement);
+                                            const data = Object.fromEntries(formData.entries());
+
+                                            new DeleteUserUsecase().execute(store.state.activeChat.id, [Number(data.users)])
+                                                .then(() => DialogService.getInstance().close())
+                                        }
+                                    }
+                                })
+                            })
+                        )
+                    })
             })
         }
     }

@@ -8,6 +8,7 @@ import {ConnectChatUsecase} from "@/usecases/connect-chat.usecase.ts";
 import {WSEvents} from "@services/ws/ws-events.enum.ts";
 import setMesseges from "@data/store/set-messeges.ts";
 import formatTime from "@utils/format-time.ts";
+import backendConfig from "@/backend.config.ts";
 
 export default (state: Indexed): Indexed => {
     if (state.chats) {
@@ -16,6 +17,10 @@ export default (state: Indexed): Indexed => {
             if (cloned.last_message) {
                 const time = cloned.last_message.time;
                 cloned.last_message.time = formatTime(time);
+            }
+
+            if (cloned.avatar) {
+                cloned.avatar = `${backendConfig.resourses}/${cloned.avatar}`;
             }
 
             return new Contact("div", {

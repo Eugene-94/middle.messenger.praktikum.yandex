@@ -20,7 +20,6 @@ export class AddUserUsecase implements Usecase<void> {
         const formData = new FormData(event.target as HTMLFormElement);
         const login = (Object.fromEntries(formData.entries()) as { login: string }).login;
 
-
         return this._userRepository.searchUser(login)
             .then((data: XMLHttpRequest) => {
                 const res = data.response as UserType[];
@@ -33,6 +32,9 @@ export class AddUserUsecase implements Usecase<void> {
             })
             .then(() => {
                 DialogService.getInstance().close();
+            })
+            .catch(xhr => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             })
     }
 }
