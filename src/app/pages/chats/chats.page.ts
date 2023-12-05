@@ -65,6 +65,7 @@ export default () => {
             submit: (event: Event) => {
                 event.preventDefault();
                 new SendMessageUsecase().execute(event);
+                (event.target as HTMLFormElement).reset();
             },
         },
     });

@@ -6,6 +6,10 @@ export class SendMessageUsecase implements Usecase<any> {
         const formData = new FormData(event.target as HTMLFormElement);
         const data = (Object.fromEntries(formData.entries()) as { message: string });
 
+        if (!data.message) {
+            return;
+        }
+
         const ws = WSTransport.getInstance();
 
         ws && ws.send({

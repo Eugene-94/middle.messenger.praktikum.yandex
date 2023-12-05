@@ -60,6 +60,7 @@ abstract class BlockAbstract<Props extends Record<string, any> = any> {
         });
 
         const fragment: HTMLTemplateElement = this._createDocumentElement("template") as HTMLTemplateElement;
+        console.log('propsAndStubs', propsAndStubs)
         fragment.innerHTML = Handlebars.compile(template)(propsAndStubs);
 
         Object.values(this.children).forEach(child => {
@@ -82,6 +83,8 @@ abstract class BlockAbstract<Props extends Record<string, any> = any> {
             })
 
             if (!stub) return;
+
+
 
             stub.replaceWith(listContent.content);
         });

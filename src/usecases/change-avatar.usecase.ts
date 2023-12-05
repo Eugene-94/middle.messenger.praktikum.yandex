@@ -19,6 +19,9 @@ export class ChangeAvatarUsecase implements Usecase<any> {
                 (event.target as HTMLFormElement).reset();
                 store.set("user", xhr.response as UserType);
                 DialogService.getInstance().close();
+            })
+            .catch(xhr => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             });
     }
 }

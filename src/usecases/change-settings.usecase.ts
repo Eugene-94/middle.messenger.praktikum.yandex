@@ -22,6 +22,9 @@ export class ChangeSettingsUsecase implements Usecase<any> {
             .then((xhr) => {
                 store.set("user", xhr.response as UserType);
                 this._router.go("/profile")
+            })
+            .catch(xhr => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             });
     }
 }

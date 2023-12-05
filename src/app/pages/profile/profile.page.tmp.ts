@@ -2,11 +2,12 @@ export default `
     <div class="container">
         <div class="profile-page">
             <div class="profile">
+                {{{ navBack }}}
                 <div class="flex flex-center">
                     {{{ avatar }}}
                 </div>
 
-                <h1 class="profile__username text-center">Иван</h1>
+                <h1 class="profile__username text-center">{{ user.first_name }}</h1>
                 
                 {{{ userInfo }}}
 

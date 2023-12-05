@@ -21,6 +21,9 @@ export class DeleteChatUsecase implements Usecase<any> {
                 store.set("chats", data.response);
                 this._router.go("/messenger");
             })
+            .catch(xhr => {
+                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+            })
     }
 
 }
