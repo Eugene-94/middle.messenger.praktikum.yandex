@@ -22,7 +22,7 @@ export class DeleteChatUsecase implements Usecase<any> {
                 this._router.go("/messenger");
             })
             .catch(xhr => {
-                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+                console.error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             })
     }
 

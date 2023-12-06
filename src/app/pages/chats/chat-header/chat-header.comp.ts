@@ -59,7 +59,7 @@ class ChatHeader extends Block<ChatHeaderProps> {
                 new GetChatUsersUsecase()
                     .execute(store.state.activeChat.id)
                     .then(users => {
-                        DialogService.getInstance().open(
+                        users && DialogService.getInstance().open(
                             "Удалить пользователя",
                             new DeleteUser("div", {
                                 form: new DeleteUserForm("form", {

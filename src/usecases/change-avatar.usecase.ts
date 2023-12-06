@@ -21,7 +21,7 @@ export class ChangeAvatarUsecase implements Usecase<any> {
                 DialogService.getInstance().close();
             })
             .catch(xhr => {
-                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+                console.error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             });
     }
 }
