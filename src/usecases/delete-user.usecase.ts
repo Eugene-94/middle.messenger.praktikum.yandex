@@ -12,7 +12,7 @@ export class DeleteUserUsecase implements Usecase<any> {
     public execute(chatId: number, users: [number]) {
         return this._chatsRepository.deleteUser({ chatId, users })
             .catch((xhr) => {
-                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+                console.error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             })
     }
 

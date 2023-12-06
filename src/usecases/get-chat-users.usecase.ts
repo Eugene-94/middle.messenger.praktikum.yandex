@@ -11,13 +11,13 @@ export class GetChatUsersUsecase implements Usecase<void> {
         this._chatsRepository = new ChatsRepository();
     }
 
-    public execute(id: number): Promise<UserType[]> {
+    public execute(id: number): Promise<UserType[] | void> {
         return this._chatsRepository.getChatUsers(id)
             .then((data) => {
                 return data.response as UserType[]
             })
             .catch((xhr) => {
-                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+                console.error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             });
     }
 }

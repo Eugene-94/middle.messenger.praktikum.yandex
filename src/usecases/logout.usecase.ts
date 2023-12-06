@@ -15,7 +15,7 @@ export class LogoutUsecase implements Usecase<any> {
                 Router.getInstance("#app").go("/")
             })
             .catch(xhr => {
-                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+                console.error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             })
     }
 }

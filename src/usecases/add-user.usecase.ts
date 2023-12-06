@@ -34,7 +34,7 @@ export class AddUserUsecase implements Usecase<void> {
                 DialogService.getInstance().close();
             })
             .catch(xhr => {
-                throw Error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
+                console.error(`HTTP request error with code ${xhr.status}. Reason: ${xhr.response.reason}`);
             })
     }
 }
