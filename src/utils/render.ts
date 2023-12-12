@@ -1,6 +1,6 @@
-import Block from "../core/block/block.ts";
+import BlockAbstract from "@core/block/block.abstract.ts";
 
-const render = (query: string, block: Block) => {
+const render = (query: string, block: BlockAbstract) => {
     const root = document.querySelector(query);
 
     if (!root) {

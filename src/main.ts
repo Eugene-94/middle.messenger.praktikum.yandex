@@ -1,9 +1,11 @@
 import "./style.scss";
 
-import routesHandling from "./routing/router";
+import appInit from "./app/app.init.ts";
 
-const app = () => {
-    routesHandling();
+const app = (): void => {
+
+    appInit();
+
 };
 
 document.addEventListener("DOMContentLoaded", app);

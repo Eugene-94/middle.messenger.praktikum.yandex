@@ -1,0 +1,11 @@
+import Block from "@/base-blocks/block.ts";
+import {BasicProps} from "@core/block/block.types.ts";
+import temp from "./add-user-form.tmp.ts";
+
+class AddUserForm extends Block<BasicProps> {
+    render(): DocumentFragment {
+        return this.compile(temp, this.props);
+    }
+}
+
+export default AddUserForm;

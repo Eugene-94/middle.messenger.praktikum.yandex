@@ -1,4 +1,4 @@
-import Block from "./block.ts";
+import BlockAbstract from "./block.abstract.ts";
 
 export type BlockMeta<T> = {
     tagName: string;
@@ -10,7 +10,7 @@ export type PropsEvents = {
 };
 
 export type BlockChildren = {
-    [key: string]: Block<any>;
+    [key: string]: BlockAbstract<any>;
 };
 
 export type BlockLists = {
