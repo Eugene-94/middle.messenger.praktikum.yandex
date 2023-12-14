@@ -1,5 +1,5 @@
 import { AuthAbstractRepository } from "@core/data/repositories/auth.abstract.repository.ts";
-import HTTPTransport from "@services/http/http.service.ts";
+import { HTTPTransport } from "@services/http/http.service.ts";
 import { SignupInfo } from "@core/types/signup-info.type.ts";
 import { LoginInfo } from "@core/types/login-info.type.ts";
 

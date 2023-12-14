@@ -1,4 +1,4 @@
-import BlockAbstract from "@core/block/block.abstract.ts";
+import BlockAbstract from "../core/block/block.abstract.ts";
 
 class Block<Props extends Record<string, any> = any> extends BlockAbstract<Props> {
 

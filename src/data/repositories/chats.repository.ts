@@ -1,4 +1,4 @@
-import HTTPTransport from "@services/http/http.service.ts";
+import {HTTPTransport} from "@services/http/http.service.ts";
 
 export class ChatsRepository {
 

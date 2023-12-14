@@ -18,7 +18,7 @@ class Router implements RouterInterface<Router> {
         return this.instance;
     }
 
-    private constructor(private _rootQuery: string) {
+    protected constructor(private _rootQuery: string) {
         this.routes = [];
     }
 
@@ -52,7 +52,7 @@ class Router implements RouterInterface<Router> {
         this.history.forward();
     }
 
-    private _onRoute(pathname: string): void {
+    protected _onRoute(pathname: string): void {
         const route = this._getRoute(pathname);
 
         if (!route) {
