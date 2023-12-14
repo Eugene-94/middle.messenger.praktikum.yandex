@@ -1,5 +1,5 @@
 import sinonChai from "sinon-chai";
-import { createSandbox, SinonStub, stub} from "sinon";
+import { createSandbox, SinonStub } from "sinon";
 import { expect, use } from "chai";
 import { HTTPTransport, queryStringify } from "./http.service.ts";
 import { afterEach, beforeEach } from "mocha";

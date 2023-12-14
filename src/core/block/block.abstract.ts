@@ -140,7 +140,7 @@ abstract class BlockAbstract<Props extends Record<string, any> = any> {
     }
 
     public componentDidMount(oldProps?: Props): void {
-        // console.log("componentDidMount", oldProps);
+        console.log("componentDidMount", oldProps);
     }
 
     dispatchComponentDidMount() {
@@ -155,7 +155,7 @@ abstract class BlockAbstract<Props extends Record<string, any> = any> {
     }
 
     public componentDidUpdate(oldProps: Props, newProps: Props): boolean {
-        // console.log("Props was updated", oldProps, newProps);
+        console.log("Props was updated", oldProps, newProps);
         return true;
     }
 
@@ -180,7 +180,7 @@ abstract class BlockAbstract<Props extends Record<string, any> = any> {
             Object.assign(this.lists, lists);
         }
 
-
+        console.log(this._setUpdate);
         this.eventBus.emit(BlockEvents.FLOW_CDU, oldValue, this.props);
 
         // if (this._setUpdate) {
