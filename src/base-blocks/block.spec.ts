@@ -6,7 +6,7 @@ import {expect} from "chai";
 describe("Component", () => {
     class Component extends Block<{title: string} & BasicProps> {
         public render(): DocumentFragment {
-            return this.compile(`<h1>{{ title }}</h1>`, this.props);
+            return this.compile("<h1>{{ title }}</h1>", this.props);
         }
     }
 

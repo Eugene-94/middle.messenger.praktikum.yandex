@@ -31,12 +31,12 @@ describe("Router tests", () => {
 
     it("should change route", () => {
         router.go("/login");
-        expect(window.location.href).to.be.equal(`https://localhost:3000/login`);
+        expect(window.location.href).to.be.equal("https://localhost:3000/login");
     });
 
     it("should redirect to 404 with non registered route", () => {
         router.go("/test");
-        expect(window.location.href).to.be.equal(`https://localhost:3000/404`);
+        expect(window.location.href).to.be.equal("https://localhost:3000/404");
     });
 
 });
