@@ -1,7 +1,7 @@
 import { RouteInterface } from "@core/routing/route.interface.ts";
 import { BlockProcessor } from "@core/block/block-processor.type.ts";
 import BlockAbstract from "@core/block/block.abstract.ts";
-import render from "@utils/render.ts";
+import render from "../utils/render.ts";
 
 class Route implements RouteInterface {
 

@@ -1,4 +1,4 @@
-import HTTPTransport from "@services/http/http.service.ts";
+import { HTTPTransport } from "@services/http/http.service.ts";
 import { UserAbstractRepository } from "@core/data/repositories/user.abstract.repository.ts";
 import { ProfileSettingsType } from "@core/types/profile-settings.type.ts";
 

@@ -3,7 +3,7 @@ import { HTTPPayload, MethodOptions, ReqOptions } from "./http-service.types.ts"
 
 type HTTPMethod = (url: string, options?: MethodOptions) => Promise<XMLHttpRequest>;
 
-function queryStringify(data: HTTPPayload) {
+export function queryStringify(data: HTTPPayload) {
     if (typeof data !== "object") {
         throw new Error("Data must be object");
     }
@@ -18,7 +18,7 @@ function queryStringify(data: HTTPPayload) {
     }, "?");
 }
 
-class HTTPTransport {
+export class HTTPTransport {
 
     private readonly _endPoint: string;
 
@@ -109,5 +109,3 @@ class HTTPTransport {
         });
     }
 }
-
-export default HTTPTransport;

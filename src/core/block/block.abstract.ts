@@ -1,5 +1,5 @@
 import { BlockEvents } from "./block-events.enum.ts";
-import EventBus from "@services/event-bus.ts";
+import EventBus from "../../services/event-bus.ts";
 import {
     BlockChildren,
     BlockLists,
@@ -180,9 +180,7 @@ abstract class BlockAbstract<Props extends Record<string, any> = any> {
             Object.assign(this.lists, lists);
         }
 
-
-        console.log("this._setUpdate", this._setUpdate)
-
+        console.log(this._setUpdate);
         this.eventBus.emit(BlockEvents.FLOW_CDU, oldValue, this.props);
 
         // if (this._setUpdate) {
